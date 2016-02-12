@@ -36,21 +36,21 @@
         var jsonPopulateData = 'JSON_POPULATE_DATA';
 
         function setJsonForm(json) {
-            if(json.constructor == Object || json.constructor == Array) {
-                jsonForm = eval(json);
-            } else {
-                jsonForm = JSON.parse(json);
-            }
-        }
+            if(json.constructor == Object || json.constructor == Array) {
+                jsonForm = eval(json);
+            } else {
+                jsonForm = JSON.parse(json);
+            }
+        }
 
-        function setJsonPopulateData(json) {
-            if(json.constructor == Object || json.constructor == Array) {
-                jsonPopulateData = eval(json);
-            } else {
-                jsonPopulateData = JSON.parse(json);
-            }
-        }
-   
+        function setJsonPopulateData(json) {
+            if(json.constructor == Object || json.constructor == Array) {
+                jsonPopulateData = eval(json);
+            } else {
+                jsonPopulateData = JSON.parse(json);
+            }
+        }
+
         function init() {
             $(document).ready(function() {
                 MMobileForms({
