@@ -8,53 +8,53 @@
 
 #import <UIKit/UIKit.h>
 
-typedef enum { Submit, SubmitInvalid, FocusIn, FocusOut, Change, ValidateError, Link, Other } MMFormEventType;
+typedef enum { Submit, SubmitInvalid, FocusIn, FocusOut, Change, ValidateError, Link, Other } MFFormEventType;
 
 #pragma mark - Delegate
 
-/** The *MMFormDelegate* protocol defines methods that a delegate of a *MMForm* object can optionally implement to intervene when form content is loaded.
+/** The *MFFormDelegate* protocol defines methods that a delegate of a *MFForm* object can optionally implement to intervene when form content is loaded.
  */
-@protocol MMFormDelegate <NSObject>
+@protocol MFFormDelegate <NSObject>
 
 @optional
 
 /** Tells the delegate when the user submit valid form
  @param data Form data as json string serialized
  */
-- (void)mmFormResult:(NSString*)data;
+- (void)MFFormResult:(NSString*)data;
 /** Tells the delegate when event occurs on form
  @param eventType The type of user event
  @param element The form element name/id
  @param value The current element value
  */
-- (void)mmFormEvent:(MMFormEventType)eventType element:(NSString*)element elementValue:(NSString*)value;
+- (void)MFFormEvent:(MFFormEventType)eventType element:(NSString*)element elementValue:(NSString*)value;
 
 @end
 
 #pragma mark - Interface
 
-/** You use the *MMForm* class to embed webform in your application. *MMForm* allows create forms dynamically, through a form definition in JSON
+/** You use the *MFForm* class to embed webform in your application. *MFForm* allows create forms dynamically, through a form definition in JSON
  
- MMForm usage example with Objective-C:
+ MFForm usage example with Objective-C:
  
-        self.form = [[MMForm alloc] initControlledBy:self];
+        self.form = [[MFForm alloc] initControlledBy:self];
         self.form.delegate = self;
         [self.form setFormNamed:@"myFormFile"];
         [self.form load];
  
- MMForm usage example with Swift:
+ MFForm usage example with Swift:
  
-        self.form = MMForm(controlledBy: self);
+        self.form = MFForm(controlledBy: self);
         self.form.delegate = self
         self.form.setFormNamed("myFormFile")
         self.form.load()
 
  */
-@interface MMForm : UIViewController <UIWebViewDelegate>
+@interface MFForm : UIViewController <UIWebViewDelegate>
 
 /** The receiver’s delegate
  */
-@property (nonatomic, weak) id<MMFormDelegate> delegate;
+@property (nonatomic, weak) id<MFFormDelegate> delegate;
 
 #pragma mark - Constructor
 

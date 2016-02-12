@@ -8,9 +8,9 @@
 
 #import "MFForm.h"
 
-#define FORMHTML_FILENAME                      @"index.mmobileforms"
+#define FORMHTML_FILENAME                      @"index.mobileforms"
 #define FORMHTML_EXTENSION                     @"html"
-#define FORMHTML_DIRECTORY                     @"mmobileforms"
+#define FORMHTML_DIRECTORY                     @"mobileforms"
 
 #define FORMJSON_EXTENSION                     @"json"
 #define FORMJSON_DIRECTORY                     @"forms"
@@ -38,7 +38,7 @@
 #define IS_LINK_EVENT(type)                    [type isEqualToString:@"link"]
 
 
-@interface MMForm ()
+@interface MFForm ()
 
 @property (nonatomic, strong) UIWebView *webView;
 @property (nonatomic, strong) NSString *jsonForm;
@@ -50,7 +50,7 @@
 @end
 
 
-@implementation MMForm
+@implementation MFForm
 
 # pragma mark - Constructors
 
@@ -59,7 +59,7 @@
     self = [super init];
     
     if(controller == nil) {
-        NSLog(@"MMForm error: controller is not defined");
+        NSLog(@"MFForm error: controller is not defined");
         return nil;
     }
     self.webView = [[UIWebView alloc] initWithFrame:self.view.frame];
@@ -84,20 +84,20 @@
 - (void)setFormNamed:(NSString*)name
 {
     if(self.loadCalled) {
-        NSLog(@"MMForm warning: 'setFormNamed:name' must be called before 'load'");
+        NSLog(@"MFForm warning: 'setFormNamed:name' must be called before 'load'");
     }
     NSString *jsonFile = [[NSBundle mainBundle] pathForResource:name ofType:FORMJSON_EXTENSION inDirectory:FORMJSON_DIRECTORY];
     if([[NSFileManager defaultManager] fileExistsAtPath:jsonFile]) {
         self.jsonForm = [NSString stringWithContentsOfFile:jsonFile encoding:NSUTF8StringEncoding error:nil];
     } else {
-        NSLog(@"MMForm error: Form (json file) named '%@' not exists inside 'forms' folder", name);
+        NSLog(@"MFForm error: Form (json file) named '%@' not exists inside 'forms' folder", name);
     }
 }
 
 - (void)setForm:(NSString*)jsonString
 {
     if(self.loadCalled) {
-        NSLog(@"MMForm warning: 'setForm:jsonString' must be called before 'load'");
+        NSLog(@"MFForm warning: 'setForm:jsonString' must be called before 'load'");
     }
     self.jsonForm = jsonString;
 }
@@ -105,7 +105,7 @@
 - (void)setPopulateData:(NSString*)jsonString
 {
     if(self.loadCalled) {
-        NSLog(@"MMForm warning: 'setPopulateData:jsonString' must be called before 'load'");
+        NSLog(@"MFForm warning: 'setPopulateData:jsonString' must be called before 'load'");
     }
     self.jsonPopulateData = jsonString;
 }
@@ -113,7 +113,7 @@
 - (void)setFrame:(CGRect)frame
 {
     if(self.loadCalled) {
-        NSLog(@"MMForm warning: 'setFrame:frame' must be called before 'load'");
+        NSLog(@"MFForm warning: 'setFrame:frame' must be called before 'load'");
     }
     self.webView.frame = frame;
 }
@@ -121,7 +121,7 @@
 - (void)load
 {
     if(self.jsonForm == nil) {
-        NSLog(@"MMForm error: JSON form is not defined, please use setFormNamed:name or setForm:jsonString before load");
+        NSLog(@"MFForm error: JSON form is not defined, please use setFormNamed:name or setForm:jsonString before load");
         return;
     }
     
@@ -178,7 +178,7 @@
 - (void)addCSSFile:(NSString*)cssFilePath overrideAllStyles:(bool)override
 {
     if(![[NSFileManager defaultManager] fileExistsAtPath:cssFilePath]) {
-        NSLog(@"MMForm error: addCSSFile:overrideAllStyles: fails, file not exists : %@", cssFilePath);
+        NSLog(@"MFForm error: addCSSFile:overrideAllStyles: fails, file not exists : %@", cssFilePath);
     }
     NSString *cssContent = [NSString stringWithContentsOfFile:cssFilePath encoding:NSUTF8StringEncoding error:nil];
     cssContent = [self escapeJavaScriptString:cssContent];
@@ -194,7 +194,7 @@
 - (void)addJSFile:(NSString*)jsFilePath
 {
     if(![[NSFileManager defaultManager] fileExistsAtPath:jsFilePath]) {
-        NSLog(@"MMForm error: addJSFile: fails, file not exists : %@", jsFilePath);
+        NSLog(@"MFForm error: addJSFile: fails, file not exists : %@", jsFilePath);
     }
     NSString *jsContent = [NSString stringWithContentsOfFile:jsFilePath encoding:NSUTF8StringEncoding error:nil];
     jsContent = [self escapeJavaScriptString:jsContent];
@@ -213,8 +213,8 @@
 
 - (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType
 {
-    bool callbackResultImplemented = [self.delegate respondsToSelector:@selector(mmFormResult:)];
-    bool callbackEventImplemented = [self.delegate respondsToSelector:@selector(mmFormEvent:element:elementValue:)];
+    bool callbackResultImplemented = [self.delegate respondsToSelector:@selector(MFFormResult:)];
+    bool callbackEventImplemented = [self.delegate respondsToSelector:@selector(MFFormEvent:element:elementValue:)];
     bool eventUrl = self.delegate &&
     [[[request URL] scheme] isEqualToString:@"mmobileforms"] &&
     [[[request URL] host] isEqualToString:@"event"];
@@ -224,17 +224,17 @@
         NSMutableDictionary *params = [self getUrlParams:[[[request URL] absoluteString] stringByRemovingPercentEncoding]]; // decoded url
         NSString *element = params[@"element"];
         NSString *value = params[@"value"];
-        MMFormEventType eventType = [self getEventType:params[@"type"] value:value];
+        MFFormEventType eventType = [self getEventType:params[@"type"] value:value];
         
         // submit valid
         if(eventType == Submit && callbackResultImplemented) {
             // valid - returns json data
             NSString *data = [self.webView stringByEvaluatingJavaScriptFromString:JSFUNC_GET_FORMDATA_VALIDATED];
-            [self.delegate mmFormResult:data];
+            [self.delegate MFFormResult:data];
         }
         // trigger all events
         if(callbackEventImplemented) {
-            [self.delegate mmFormEvent:eventType element:element elementValue:value];
+            [self.delegate MFFormEvent:eventType element:element elementValue:value];
         }
         return NO;
     }
@@ -296,7 +296,7 @@
     return string;
 }
 
-- (MMFormEventType)getEventType:(NSString*)type value:(NSString*)value
+- (MFFormEventType)getEventType:(NSString*)type value:(NSString*)value
 {
     if(IS_SUBMIT_EVENT(type, value)) {
         return Submit;
