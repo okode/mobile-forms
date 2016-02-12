@@ -1,4 +1,4 @@
-jQuery.fn.MMobileFormsPopulator = function(obj, options) {
+jQuery.fn.MobileFormsPopulator = function(obj, options) {
 
     // ---------------------------------------------------------------------------------------------
     // JSON conversion function
@@ -87,7 +87,7 @@ jQuery.fn.MMobileFormsPopulator = function(obj, options) {
                     return true;
                 }
             } catch(err) {}
-            console.log('MMobileForms (populator) error: No such element as ' + name);
+            console.log('MobileForms (populator) error: No such element as ' + name);
             return false;
         }
 

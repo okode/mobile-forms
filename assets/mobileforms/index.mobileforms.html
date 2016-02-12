@@ -26,11 +26,11 @@
 <body>
 
     <!-- MMobileForms JS -->
-    <script src="mmobileforms.libraries.js"></script>
-    <script src="mmobileforms.utils.js"></script>
-    <script src="mmobileforms.populator.js"></script>
-    <script src="mmobileforms.builder.js"></script>
-    <script src="mmobileforms.js"></script>
+    <script src="mobileforms.libraries.js"></script>
+    <script src="mobileforms.utils.js"></script>
+    <script src="mobileforms.populator.js"></script>
+    <script src="mobileforms.builder.js"></script>
+    <script src="mobileforms.js"></script>
     <script>
         var jsonForm         = 'JSON_FORM';
         var jsonPopulateData = 'JSON_POPULATE_DATA';
@@ -64,14 +64,14 @@
     </script>
 
     <!-- MMobileForms Template (default ios, replaced if userAgent contains /Android/ or /IEMobile/) -->
-    <link id="cssTemplate" href="templates/mmobileforms.ios.css" rel="stylesheet" type="text/css">
+    <link id="cssTemplate" href="templates/mobileforms.ios.css" rel="stylesheet" type="text/css">
     <script>
         $(document).ready(function() {
             if(navigator.userAgent.match(/Android/i)) { // android
-                $('#cssTemplate').attr("href","templates/mmobileforms.android.css");
+                $('#cssTemplate').attr("href","templates/mobileforms.android.css");
             } else {
                 if(navigator.userAgent.match(/IEMobile|Windows Phone/i)) { // windows phone
-                    $('#cssTemplate').attr("href","templates/mmobileforms.wp.css");
+                    $('#cssTemplate').attr("href","templates/mobileforms.wp.css");
                 }
             }
         });

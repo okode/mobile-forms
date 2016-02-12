@@ -1,4 +1,4 @@
-function MMobileForms(params) {
+function MobileForms(params) {
     
     var jsonResult = null;
 
@@ -25,10 +25,10 @@ function MMobileForms(params) {
             isMobile = params.isMobile ? true : false;
         }
         if(jsonForm == null) {
-            $.error('MMobileForms error: jsonForm is null');
+            $.error('MobileForms error: jsonForm is null');
         }
         // Build form fields, validators, ...
-        $(formContainer).MMobileFormsBuilder({
+        $(formContainer).MobileFormsBuilder({
             id : formId,
             fields : jsonForm
         }, formReadyCallback, submitFormCallback, eventManager);
@@ -72,7 +72,7 @@ function MMobileForms(params) {
     
     this.populateWithData = function(data) {
         if(data != "JSON_POPULATE_DATA") {
-            $('#'+formId).MMobileFormsPopulator(data);
+            $('#'+formId).MobileFormsPopulator(data);
         }
     };
 
@@ -137,7 +137,7 @@ function MMobileForms(params) {
                 window.external.notify(eventUrl);
             } else {
                 var iframe = document.createElement("IFRAME");
-                iframe.setAttribute("src", 'mmobileforms://' + eventUrl);
+                iframe.setAttribute("src", 'mobileforms://' + eventUrl);
                 document.body.appendChild(iframe);
                 iframe.parentNode.removeChild(iframe);
             }
@@ -282,7 +282,7 @@ function MMobileForms(params) {
             });
             readOnly = true;
         } else {
-            $.error('MMobileForms error: setReadOnlyForm failed, jsonPopulateData is null');
+            $.error('MobileForms error: setReadOnlyForm failed, jsonPopulateData is null');
         }
 
     };
