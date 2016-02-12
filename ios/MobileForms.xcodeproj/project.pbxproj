@@ -31,6 +31,7 @@
 		3E66F4721C6DE8480045E4AC /* MFKit.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MFKit.m; sourceTree = "<group>"; };
 		3E66F4791C6DE9330045E4AC /* MFForm.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MFForm.h; sourceTree = "<group>"; };
 		3E66F47A1C6DE9330045E4AC /* MFForm.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MFForm.m; sourceTree = "<group>"; };
+		3E66F47C1C6DEDD30045E4AC /* assets */ = {isa = PBXFileReference; lastKnownFileType = folder; name = assets; path = ../assets; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -48,6 +49,7 @@
 			isa = PBXGroup;
 			children = (
 				3E66F46F1C6DE8480045E4AC /* MobileForms */,
+				3E66F47C1C6DEDD30045E4AC /* assets */,
 				3E66F46E1C6DE8480045E4AC /* Products */,
 			);
 			sourceTree = "<group>";

@@ -1,0 +1,838 @@
+* {
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+	font-family: "Segoe", "sans-serif", "Segoe UI Symbol", "Symbols", Arial;
+}
+html,
+body {
+	padding: 0;
+	margin: 0;
+	overflow-x: hidden;
+	background-color: #000000;
+}
+input,
+textarea,
+select {
+	outline: 0;
+    -webkit-touch-callout: text;
+    -webkit-user-select: text;
+    -khtml-user-select: text;
+    -moz-user-select: text;
+    -ms-user-select: text;
+    user-select: text;
+}
+a {
+	outline: 0;
+	text-decoration: none;
+	color: #007aff;
+}
+.clearFix {
+	clear: both;
+}
+
+
+/* 
+
+	GLOBAL 
+	---------------------------------- 
+	
+*/
+form {
+	margin-bottom: 20px;
+	padding: 15px;
+}
+fieldset {
+	border: 0;
+	padding: 0;
+	margin: 0;
+	margin-bottom: 40px;
+}
+fieldset legend {
+	box-sizing: border-box;
+	display: block;
+	padding: 25px 0px 15px 0px;
+	margin-bottom: 5px;
+	width: 100%;
+	font-size: 40px;
+	font-weight: 500;
+	line-height: 40px;
+	color: #fff;
+	max-width: 100%;
+	z-index: 999;
+	letter-spacing: -0.02em;
+}
+fieldset > div {
+	padding: 8px 15px 8px 0;
+	margin-left: 0;
+	color: #000;
+	font-size: 13px;
+	line-height: 38px;
+	min-height: 28px;
+	width: 100%;
+	overflow: hidden;
+}
+fieldset > div > * {
+	display: inline-block;
+	float: left;
+}
+fieldset > div > label {
+	width: 100%;
+	margin-right: 3%;
+	height: 14px;
+	line-height: 14px;
+	text-align: left;
+	font-size: 14px;
+	padding: 8px 0px 7px 0;
+	white-space: nowrap;
+	position: relative;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	max-width: 100%;
+	z-index: 999;
+	color: #fff;
+}
+fieldset > div > label.errorLabel {
+	color: #f44336;
+}
+fieldset div[class^="field_"].customWidth {
+	float: left;
+	margin: 0;
+	padding: 8px 8px 7px 0;
+	padding-left: 0%;
+	box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+}
+fieldset div[class^="field_"].customWidth .field_desc, fieldset div[class^="field_"].customWidth .error_mesg {
+	display: none !important;
+}
+fieldset > div .field_desc, fieldset > div .error_mesg {
+	width: 92%;
+	margin: 1px 0 4px 0;
+	padding: 0;
+	float: left;
+}
+fieldset > div .field_desc {
+	font-size: 11px;
+	line-height: 11px;
+	color: #999;
+	margin-top: 7px;
+}
+fieldset > div .error_mesg {
+	font-size: 12px;
+	line-height: 12px;
+	color: #f44336;
+	margin: 8px 0 0px 0;
+}
+
+
+/* 
+
+	FORM ELEMENTS 
+	---------------------------------- 
+	
+*/
+
+/* BASIC INPUTS */
+fieldset input[type='text'], fieldset input[type='number'], fieldset input[type='tel'], fieldset input[type='email'], fieldset input[type='date'], fieldset input[type='time'], fieldset select, fieldset textarea, fieldset .inputContainer {
+	display: block;
+	outline: 0;
+	border: 0;
+	padding: 0 7px;
+	width: 100%;
+	height: 34px;
+	background: #ccc;
+	color: #fff;
+	font-size: 16px;
+	vertical-align: middle;
+	-webkit-tap-highlight-color: transparent;
+	font-weight: 400;
+	color: #000;
+	-webkit-border-radius: 0px;
+	-moz-border-radius: 0px;
+	border-radius: 0px;
+    -webkit-appearance:none;
+    -moz-appearance:none;
+    -ms-appearance:none;
+    appearance:none;
+    box-sizing: border-box;
+    min-width: 10px;
+}
+fieldset .inputContainer {
+	background: transparent;
+}
+fieldset input[type='date'], fieldset input[type='time'], fieldset select {
+	-webkit-appearance: none;
+	background-repeat: no-repeat;
+	background-position: right center;
+	-webkit-background-size: 25px 25px;
+	background-size: 25px 25px;
+	background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAYAAAAeP4ixAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAA2hpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMy1jMDExIDY2LjE0NTY2MSwgMjAxMi8wMi8wNi0xNDo1NjoyNyAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wTU09Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9tbS8iIHhtbG5zOnN0UmVmPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvc1R5cGUvUmVzb3VyY2VSZWYjIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtcE1NOk9yaWdpbmFsRG9jdW1lbnRJRD0ieG1wLmRpZDowNDgwMTE3NDA3MjA2ODExODA4M0RCOTRDREU5ODYzQyIgeG1wTU06RG9jdW1lbnRJRD0ieG1wLmRpZDpBRkZENTQ1MjQ3MjMxMUU0QTkyRkI5QUJBNkU0RDdERiIgeG1wTU06SW5zdGFuY2VJRD0ieG1wLmlpZDpBRkZENTQ1MTQ3MjMxMUU0QTkyRkI5QUJBNkU0RDdERiIgeG1wOkNyZWF0b3JUb29sPSJBZG9iZSBQaG90b3Nob3AgQ1M2IChNYWNpbnRvc2gpIj4gPHhtcE1NOkRlcml2ZWRGcm9tIHN0UmVmOmluc3RhbmNlSUQ9InhtcC5paWQ6RkU3RjExNzQwNzIwNjgxMThDMTRCMDU0RTkxREZGMzciIHN0UmVmOmRvY3VtZW50SUQ9InhtcC5kaWQ6MDQ4MDExNzQwNzIwNjgxMTgwODNEQjk0Q0RFOTg2M0MiLz4gPC9yZGY6RGVzY3JpcHRpb24+IDwvcmRmOlJERj4gPC94OnhtcG1ldGE+IDw/eHBhY2tldCBlbmQ9InIiPz5kntCXAAABNElEQVR42uyZOwrCQBiEXWtBEBERG2vFE+Q6WiheJmCT0s7Sq4jWNiIiIgiWSpyFXQjiK9k/moQZGDaEffxfmDzYqDAMS0VQuVQQEYQgBCEIQQhCEIIQhCAEIQhBCCIAopTy4BscCljP4yUuRm8+uBjy9TQC9l3qUK67KLiKFTRLuOMwzQbuo5bLP+8RvfjAXNVEodDjXSCkomUVJIxU4FqDVLTsYRVewe0Yw7dwDzWcs/T41cUMY44ZSkBIR8tq9mWkZhLrpxEtqxq8hptvhu3hLnyS2ntO481+gkcf+oxMPzmlEC2r+YtIzSXXTzNaVg0TsXrk3NFE6hAFyfpHoy528nBuEoXIS7SsFvDVtOLr/yJaVi14DE/h3TMQCSn+eiMIQQhCEIIQhCAEIQhB8qa7AAMA8Bp74QcP5i8AAAAASUVORK5CYII=');
+}
+fieldset select::-ms-expand {
+	display: none;
+}
+
+
+fieldset input[type='text']:focus, fieldset input[type='number']:focus, fieldset input[type='tel']:focus, fieldset input[type='email']:focus {
+	background: #fff;
+	border: 2px solid #3d63fb;
+	padding: 0 5px;
+} 
+fieldset label.focus {
+	/*color: #fff;*/
+}
+input::-webkit-input-placeholder {
+	color: #888;
+}
+input:-ms-input-placeholder {
+	color: gray !important;
+}
+fieldset textarea {
+	margin-bottom: 8px;
+	line-height: 20px;
+	height: 60px;
+	float: right;
+    resize: none;
+    padding: 5px;
+}
+fieldset textarea:focus {
+	background: #fff;
+}
+fieldset input.error_input, fieldset select.error_input, fieldset textarea.error_input {
+	/*border-bottom: 2px solid #f44336 !important;*/
+}
+input[type="number"]::-webkit-inner-spin-button, 
+input[type="number"]::-webkit-outer-spin-button { 
+	-webkit-appearance: none; 
+	margin: 0; 
+}
+
+/* CHECKBOX */
+fieldset .checkboxDiv {
+	width: 98%;
+	margin-top: -48px;
+}
+fieldset .checkboxDiv label {
+	line-height: 25px;
+	display: block;
+	padding: 7px 7px 7px 48px;
+	color: #eee;
+	font-size: 16px;
+}
+fieldset .checkboxDiv input[type="checkbox"] {
+	-webkit-transition-duration: 300ms;
+	transition-duration: 300ms;
+	width: 26px;
+	height: 26px;
+	position: relative;
+	right: 0;
+	margin-bottom: -47px;
+}
+/* RADIO */
+fieldset .radios {
+	width: 100%;
+	margin: -16px 0 -7px 0;
+	position: relative;
+}
+fieldset label + .radios {
+	width: 100%;
+	margin: 5px 0 -7px 0;
+}
+fieldset .radios .radio {
+	font-size: 13px;
+	line-height: 38px;
+	padding: 8px 0 7px 0;
+}
+fieldset .radios .radio:last-child {
+	border-bottom: 0;
+}
+fieldset .radios .radio span {
+	overflow: hidden;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+	display: block;
+	margin-left: 42px;
+	color: #eee;
+	font-size: 16px;
+}
+fieldset input[type="radio"] {
+	position: absolute;
+	width: 28px;
+	height: 28px;
+	margin: 5px 3px 3px 3px;
+	display: block;
+	float: right;
+	appearance: none;
+	margin-left: 0px;
+	z-index: 9999;
+}
+input[type="radio"] + span::before {
+	content: ' ';
+	-webkit-transition-duration: 300ms;
+	transition-duration: 300ms;
+	right: 0;
+	width: 28px;
+	height: 38px;
+	position: absolute;
+	z-index: 1;
+}
+input[type="submit"] {
+	cursor: pointer;
+	text-decoration: none;
+	font-size: 13pt;
+	display: block;
+	width: auto;
+	box-sizing: border-box;
+	height: 30px;
+	height: auto;
+	position: relative;
+	white-space: nowrap;
+	overflow-x: hidden;
+	text-overflow: ellipsis;
+	vertical-align: middle;
+	border: solid 2px #ffffff;
+	color: #ffffff;
+	padding: 8px 10px 10px 10px;
+	overflow: hidden;
+	text-align: center;
+	background: transparent;
+	opacity: 1;
+	margin: 30px 10% 20px 10%;
+	width: 80%;
+}
+input[type="submit"]:disabled, input[type="submit"].disabled {
+	background: transparent;
+	box-shadow: none;
+	opacity: 0.4;
+}
+input[type="submit"]:not([disabled]):focus {
+	background: #fff;
+	color: #000;
+}
+fieldset .inputContainer {
+	height: auto;
+	border-bottom: none;
+	padding: 0 14px 0 0;
+}
+fieldset .inputContainer a.add {
+	width: 30px;
+	height: 30px;
+	border-radius: 30px;
+	color: #fff;
+	display: block;
+	line-height: 27px;
+	text-align: center;
+	font-size: 32px;
+	font-weight: 100;
+	position: absolute;
+	right: 0;
+	margin: 2px 18px 0 0;
+	border: 2px solid #fff;
+	box-sizing: border-box;
+	font-family: sans-serif;
+    padding: 0;
+}
+fieldset .inputContainer a.delete {
+	width: 30px;
+	height: 30px;
+	border-radius: 30px;
+	color: #fff;
+	display: block;
+	line-height: 21px;
+	text-align: center;
+	font-size: 42px;
+	font-weight: 100;
+	position: absolute;
+	right: 0;
+	margin: 2px 18px 0 0;
+	border: 2px solid #fff;
+	box-sizing: border-box;
+	font-family: sans-serif;
+    padding: 0;
+}
+fieldset .inputContainer input[name$="[]"] {
+	border-radius: 0px;
+	width: 88%;
+}
+fieldset .inputContainer input[name$="[]"]:nth-child(n+3) {
+	margin-top: 15px;
+	border-radius: 0px;
+}
+fieldset input[type="range"] + div.rangeValue {
+	font-size: 16px;
+	font-weight: 300;
+	right: 1px;
+	margin-top: 0px;
+	width: 45px;
+	text-align: right;
+	color: #999;
+	float: right;
+	margin: -5px 3px -30px 0;
+}
+
+
+/* 
+
+	Date and Time custom pickers 
+	---------------------------------- 
+	
+*/
+
+.datePicker, .timePicker {
+	width: 100%;
+}
+.datePicker select, .timePicker select {
+	float: left;
+	width: 60px;
+	margin-right: 10px;
+}
+.datePicker select.yyyy {
+	width: 80px;
+	margin-right: 0;
+}
+.datePicker input, .timePicker input, form.readOnlyMode .datePicker input, form.readOnlyMode .timePicker input {
+	/*margin-top: 5px;
+	float: left;
+	opacity: 0.25 !important;*/
+	display: none !important;
+}
+.datePicker .separator, .timePicker .separator {
+    display: none;
+}
+form.readOnlyMode .datePicker .separator, form.readOnlyMode .timePicker .separator {
+    display: inline;
+    float: left;
+    color: white;
+    font-size: 20px;
+    margin-top: -14px;
+    margin-left: -8px;
+}
+form.readOnlyMode .datePicker select, form.readOnlyMode .timePicker select {
+    width: 35px;
+}
+form.readOnlyMode .datePicker select.yyyy {
+	width: 80px;
+}
+
+/* 
+
+	READ ONLY MODE 
+	---------------------------------- 
+	
+*/
+
+form.readOnlyMode input[type="submit"],
+form.readOnlyMode input[type="button"],
+form.readOnlyMode .required,
+form.readOnlyMode fieldset > div .field_desc, 
+form.readOnlyMode fieldset > div .error_mesg,
+form.readOnlyMode input[type="checkbox"],
+form.readOnlyMode .checkbox,
+form.readOnlyMode a.add,
+form.readOnlyMode a.delete,
+form.readOnlyMode fieldset input[type="radio"]:checked {
+	display: none;
+	background: none;
+}
+form.readOnlyMode input,
+form.readOnlyMode textarea,
+form.readOnlyMode select,
+form.readOnlyMode .checkboxDiv label {
+	background: none;
+    opacity: 1 !important;
+    color: #fff !important;
+	border: none !important;
+    text-overflow: ellipsis;
+    -o-text-overflow: ellipsis;
+	margin: -12px 0 12px 0;
+	padding: 0;
+	font-size: 20px;
+}
+form.readOnlyMode div.customWidth input,
+form.readOnlyMode div.customWidth textarea,
+form.readOnlyMode div.customWidth select,
+form.readOnlyMode div.customWidth .checkboxDiv label {
+	font-size: 16px;
+}
+form.readOnlyMode textarea,
+form.readOnlyMode input[type="checkbox"],
+form.readOnlyMode input[type="tel"],
+form.readOnlyMode input[type="email"],
+form.readOnlyMode .checkboxDiv label {
+	margin: 8px 0 3px 0;
+}
+form.readOnlyMode fieldset .checkboxDiv {
+	margin-top: auto;
+}
+form.readOnlyMode select::-ms-value {
+    color: #fff;
+    opacity: 1;
+	padding: 0;
+}
+
+form.readOnlyMode label {
+	color: #AAA;
+	font-size: 12px;
+	-webkit-transition-duration: 0ms;
+	transition-duration: 0ms;
+}
+form.readOnlyMode *::-webkit-input-placeholder {
+    color: transparent;
+    -webkit-text-fill-color: transparent;
+}
+form.readOnlyMode input[type="range"] {
+	margin: 15px 0 12px 0;
+}
+form.readOnlyMode input[type="range"]::-webkit-slider-thumb:after {
+	opacity: 0;
+}
+form.readOnlyMode input[type="range"]::-webkit-slider-thumb:before {
+	margin-right: -28px;
+	/*background: #003671;*/
+}
+form.readOnlyMode .telInputReadOnly, form.readOnlyMode .emailInputReadOnly {
+	background: no-repeat center;
+	background-position: right center;
+	-webkit-background-size: 30px 30px;
+	background-size: 30px 30px;
+	position: relative;
+	right: 0;
+	height: 43px;
+	display: block;
+	width: 100%;
+	-webkit-transition-duration: 300ms;
+	transition-duration: 300ms;
+	margin-top: -43px;
+}
+form.readOnlyMode fieldset .inputContainer {
+	padding: 0;
+}
+form.readOnlyMode fieldset .inputContainer input[name$="[]"]:nth-child(n+3) {
+	margin-top: 0px;
+	padding: 3px 0 0 0;
+}
+form.readOnlyMode .telInputReadOnly {
+	background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAYAAAAeP4ixAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyRpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMy1jMDExIDY2LjE0NTY2MSwgMjAxMi8wMi8wNi0xNDo1NjoyNyAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENTNiAoTWFjaW50b3NoKSIgeG1wTU06SW5zdGFuY2VJRD0ieG1wLmlpZDoxN0ZDN0FFNTQ3QjYxMUU0ODE5RUZCNDAyRDExNEIwMSIgeG1wTU06RG9jdW1lbnRJRD0ieG1wLmRpZDoxN0ZDN0FFNjQ3QjYxMUU0ODE5RUZCNDAyRDExNEIwMSI+IDx4bXBNTTpEZXJpdmVkRnJvbSBzdFJlZjppbnN0YW5jZUlEPSJ4bXAuaWlkOjE3RkM3QUUzNDdCNjExRTQ4MTlFRkI0MDJEMTE0QjAxIiBzdFJlZjpkb2N1bWVudElEPSJ4bXAuZGlkOjE3RkM3QUU0NDdCNjExRTQ4MTlFRkI0MDJEMTE0QjAxIi8+IDwvcmRmOkRlc2NyaXB0aW9uPiA8L3JkZjpSREY+IDwveDp4bXBtZXRhPiA8P3hwYWNrZXQgZW5kPSJyIj8+m6QbvAAAA+BJREFUeNrcms9LVFEUx8fXj0VNMkW2EKyXglIgDv1Y1GomxPoHKluUQrhVEGoT0Q9oUwsJNd2NFUq10WVGokFOiwIDS1IorDZR2kRNS53OjXPjdHp3nHd/zAwd+MDzMp57v+/+eOeeeytyuVzEktUASeAA0AD4wHZgM1ABZIElYBGYB14Ak8BHG5VXGArZCbQBrcBeTR9zwD3gDvBeuyVCiAZNwANgJWfPVtBnk06bwvbIDuA6cAaHC7WvwDjwDIfOIg6ln+J9AVEcaj4OvUPAUWAbf7fYO+eBzy565DiQCXiT00CLZs9G8H+nA/xmsM6C/BTyo43ArYCKngKNBgI4jeiT2wC2wUhIFBhnjueAZosCOM1YB7VxbIuWkE1AmjnsBzY4FCERdfSxutPYplBCRFdOMEfdRRDA6WZteKwaZioHfE50lECEpCNgzhQk5CT7x84SipB0sTa1riWkmi2x/WUgQtLHlubqfEKGyY9fAes0KowDKWAU8C0K8YBZ0r5hlZB9wCr5YUKjsh42BFKWeyVBfK9im/8RMsY+dmErSSliKN+yGPrRHONCdrEAMOwXuz1PMHjZspBGFmjupkIusNgprPOZPELExIxZFkNjs6tUCA0Jjmk4XsvaLQtJEt/zoszDnd0eDIaXgYchtzSJSPFtkoT49UCtEHKE/OCR5QqncPs75EAMfeFJD/fY0tIaDr8pypPIlKNeeU6e4x52jbQFDYcv8/SGS5snzw1CSB0peKvpNEhMu2Mh78jz7zlSRQq+GMwFbm2OhdAhHRNCKknBd02nTxSrmcsV7Qd53uJZcjqmmPSue+WPeawXKg183VTME99R26PkOeuxeVFl4Fj1rehyJGQrec54bKWqM3C8qBAjeiXmQEgtXcE89u2oN3R+JaBMiLhEFoBJzCaOGtbV8Nc3BQKuNhKAjVgI6HpC5HsTBvXcJn7OioIaUrBkQUhMkVoNMpMd5Cfip9ZWGB9mo2VjB0m3vAsyjBc2TMbbRQsTcShExKuzql0jz/dpNt433OqqhthMAT2SsbnVtZF80J38KZvJB8F+C+kgFT42WPbQDP6dcJEO4gm6WUyKlUumseAEXVDKtK+MhPSGSZlGMEFcbknszrBJbMlAGR8rDP4PBz0TYQ96VEdvvUU6elvP5oT20VupD0Nf2zwMpcNssITH04M2jqdLfWHghMsrHDeA0wFXOJbxCkcaN2vyCkeW7LHlFQ6xgTsMtGAZv8JxFzjn6goHP15zdakmXoxLNaprTqdIRj+svQFGTK85mQrhokTS+iAOHXnxTKZt6MWzBUxCi/37BxuV/xJgAPTR8nKfFfXVAAAAAElFTkSuQmCC');
+}
+form.readOnlyMode .emailInputReadOnly {
+	background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAYAAAAeP4ixAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyRpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMy1jMDExIDY2LjE0NTY2MSwgMjAxMi8wMi8wNi0xNDo1NjoyNyAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENTNiAoTWFjaW50b3NoKSIgeG1wTU06SW5zdGFuY2VJRD0ieG1wLmlpZDoxN0ZDN0FFOTQ3QjYxMUU0ODE5RUZCNDAyRDExNEIwMSIgeG1wTU06RG9jdW1lbnRJRD0ieG1wLmRpZDoxN0ZDN0FFQTQ3QjYxMUU0ODE5RUZCNDAyRDExNEIwMSI+IDx4bXBNTTpEZXJpdmVkRnJvbSBzdFJlZjppbnN0YW5jZUlEPSJ4bXAuaWlkOjE3RkM3QUU3NDdCNjExRTQ4MTlFRkI0MDJEMTE0QjAxIiBzdFJlZjpkb2N1bWVudElEPSJ4bXAuZGlkOjE3RkM3QUU4NDdCNjExRTQ4MTlFRkI0MDJEMTE0QjAxIi8+IDwvcmRmOkRlc2NyaXB0aW9uPiA8L3JkZjpSREY+IDwveDp4bXBtZXRhPiA8P3hwYWNrZXQgZW5kPSJyIj8+1Qj5pAAABA5JREFUeNrcmjtMFFEUhocVKZCQ9VmQKAuYJZqsDD4KrXYMATtpVEx8YEGLQKKdCY2NFpoAQq3BqA3YiRHXQtZCE4mrREgU1EoFFw0WFrCem5ybHI8zuzN37rADJ/nIZfY+zj/3MfdVksvlDE22E7CAg0A9EAO2AZuAEmAJmAfmgGngFZACvugovMSnkF3AeaAN2KuYxxRwD7gNfFL2RAhRoAF4ACzn9Nky5tmg4pPXGtkBXAPOYXOh9gMYA15g05nDpvRbvC+gAptaDJveYaAF2MLfLdbOZeBbEDVyAsjavMkJoFmxZg1MO2GTbxbLdJWPm0hlwC2bgp4DCR8COAnMk9sg+uBLSAUwxjKeApo0CuA0YRnUxtAXJSHlQJplOABsDFCERJTRz8pOo0+ehIiqHGcZ9ayCAE4P8+GJUzNzyoD3iY4iiJB02PQZV0JOsYSdRRQhuch8aiskpIoNsQMhECHpZ0NzVT4hwyTyW2BDiIREgAzxb9hJyH5ghURMhkiEJEn8W0Gf/xMyyj52RkihH81RLqSaTQATIRaSYBPNGvE8glOuM4AMp4FMgSnaDZzcBcHrAmVn0EcDfb5AJ410SnDMxVtJ5YK1QuVbJO60nMaLld1nVLiAU+1CJlZ2SQxPAg99LvCOAyZd8LlI8xWXFcLqSuHPUfLjYwUnTBTTDSx6TBvFZmoqlPsI10XCrAiusQ3SP1SsHWsp5iFNDNO0K5b5kr5MISROHswoZLhIakZ01FYXaVoxrknymPRY7jQJ1wshdeTBBwUhFnFCNJURoDdP/F6MEyV9zFLoZx9JuFaMAD/JCFDpcixPsREmCoywkSeFzw0Sh492IyROr4dRS7CVxJ83PA57TkIkXSy/WcBEZtlvXSytVyFlJP6fUkOv3cSmIpuO7NBR1qcshT6R10Qf+UX+r9SQ5zOghvUbp9/8WAUJLwkh38mD7ZpekHjrjVhDtLYshW+Nk20m4WyEjVR1mptaNwpqxLBOq6UjWIR9O+KGfpvU3R/kt4N+UyK4Ky7tiLF27BB9WWLUekoeNCtkmNTkWLXH+C3/TGLX6DSeLnln6MJqmKi74mF+FYS5yfsqCd+nBz0xHL2ksH0FVonleCxQHtDgkO8UKwG8wfAKsBuYXXebD4ID62U7iG/QZXBTbM1t0NltmfaHSEifly1TAzeIw7aJ3el1E1syGOJjhaH1cNAz7vWgx+norW+Vjt5KWZ9QPnor9mHoO52HobSZDRXxeHpIx/F0sS8MnAzyCsd14KzN/uwCXuFI42JNXuFYImtseYUjjmufZpu9ZuHQHeBSUFc4KGaAl2rM1bhU43TN6TSwRzGP98Bdv9ec/ArhoixcgsbJxTO5bUMvns3gJnSKHGn4sr8CDACDfeVl1GkHUAAAAABJRU5ErkJggg==');
+}
+form.readOnlyMode .telInputReadOnly:active, form.readOnlyMode .emailInputReadOnly:active {
+	-webkit-transition-duration: 0ms;
+	transition-duration: 0ms;
+}
+form.readOnlyMode input[type="tel"], form.readOnlyMode input[type="email"] {
+	width: 92%;
+}
+form.readOnlyMode select, form.readOnlyMode input[type="date"], form.readOnlyMode input[type="time"] {
+	background: none;
+}
+form.readOnlyMode input[type="radio"] + span::before {
+	background: none;
+}
+form.readOnlyMode input[type="range"]::-webkit-slider-thumb {
+    background: #999;
+}
+form.readOnlyMode input[type="range"]::-webkit-slider-runnable-track:before {
+    border-bottom: solid 1px #999;
+}
+
+form.readOnlyMode fieldset {
+	margin: 0 -25px 25px 0;
+	padding: 0 25px 25px 0;
+}
+form.readOnlyMode fieldset > div {
+	padding: 0 15px 0 0;
+}
+form.readOnlyMode fieldset div[class^="field_"].customWidth {
+	padding: 8px 8px 0 0;
+}
+form.readOnlyMode fieldset .radios .radio {
+	padding: 0;
+}
+form.readOnlyMode fieldset label + .radios {
+	margin-top: 0;
+}
+form.readOnlyMode {
+	margin-bottom: 0px;
+}
+form.readOnlyMode fieldset legend {
+	padding-bottom: 15px;
+}
+form.readOnlyMode fieldset .radios {
+	margin-top: 8px;
+}
+form.readOnlyMode fieldset .radios .radio span {
+	margin: -14px 0 0 0;
+	font-size: 20px;
+}
+
+form.readOnlyMode fieldset input[type="range"] + div.rangeValue {
+    padding-bottom: 20px;
+    margin-top: -18px;
+}
+
+
+
+/*********************************
+
+           WinJS "Hacks" 
+				 
+ *********************************/
+
+input[type=range] {
+  width: 100%;
+  height: auto;
+  padding: 5px 0px 0px 0px;
+  -webkit-appearance: none;
+}
+input[type=range]:focus {
+  outline: none;
+}
+input[type=range]::-ms-track {
+  padding: 0px;
+  width: auto;
+  height: 11px;
+  margin: 6px 0 6px 0;
+  border-style: none;
+}
+input[type=range]::-webkit-slider-runnable-track {
+  height: 11px;
+}
+input[type=range]::-moz-range-track {
+  height: 11px;
+  border: none;
+}
+input[type=range]::-ms-thumb {
+  width: 11px;
+  height: 11px;
+  border-style: none;
+}
+input[type=range]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  height: 11px;
+  width: 11px;
+}
+input[type=range]::-moz-range-thumb {
+  width: 11px;
+  height: 11px;
+  border-radius: 0;
+  border: none;
+}
+input[type=range]::-ms-ticks-before,
+input[type=range]::-ms-ticks-after {
+  width: 100%;
+  height: 5px;
+  display: none;
+}
+input[type=range]:disabled::-ms-fill-lower {
+  margin-right: 5px;
+}
+input[type=range]:disabled::-ms-fill-upper {
+  margin-left: 6px;
+}
+input[type=range]:disabled:lang(ar)::-ms-fill-lower,
+input[type=range]:disabled:lang(dv)::-ms-fill-lower,
+input[type=range]:disabled:lang(fa)::-ms-fill-lower,
+input[type=range]:disabled:lang(he)::-ms-fill-lower,
+input[type=range]:disabled:lang(ku-Arab)::-ms-fill-lower,
+input[type=range]:disabled:lang(pa-Arab)::-ms-fill-lower,
+input[type=range]:disabled:lang(prs)::-ms-fill-lower,
+input[type=range]:disabled:lang(ps)::-ms-fill-lower,
+input[type=range]:disabled:lang(sd-Arab)::-ms-fill-lower,
+input[type=range]:disabled:lang(syr)::-ms-fill-lower,
+input[type=range]:disabled:lang(ug)::-ms-fill-lower,
+input[type=range]:disabled:lang(ur)::-ms-fill-lower,
+input[type=range]:disabled:lang(qps-plocm)::-ms-fill-lower {
+  margin-right: 0;
+  margin-left: 5px;
+}
+input[type=range]:disabled:lang(ar)::-ms-fill-upper,
+input[type=range]:disabled:lang(dv)::-ms-fill-upper,
+input[type=range]:disabled:lang(fa)::-ms-fill-upper,
+input[type=range]:disabled:lang(he)::-ms-fill-upper,
+input[type=range]:disabled:lang(ku-Arab)::-ms-fill-upper,
+input[type=range]:disabled:lang(pa-Arab)::-ms-fill-upper,
+input[type=range]:disabled:lang(prs)::-ms-fill-upper,
+input[type=range]:disabled:lang(ps)::-ms-fill-upper,
+input[type=range]:disabled:lang(sd-Arab)::-ms-fill-upper,
+input[type=range]:disabled:lang(syr)::-ms-fill-upper,
+input[type=range]:disabled:lang(ug)::-ms-fill-upper,
+input[type=range]:disabled:lang(ur)::-ms-fill-upper,
+input[type=range]:disabled:lang(qps-plocm)::-ms-fill-upper {
+  margin-left: 0;
+  margin-right: 6px;
+}
+input[type=range].win-vertical {
+  width: auto;
+  height: 191px;
+  padding: 0px 17px;
+  writing-mode: bt-lr;
+}
+input[type=range].win-vertical::-ms-track {
+  width: 11px;
+  height: auto;
+}
+input[type=range].win-vertical:disabled::-ms-fill-lower {
+  margin-right: 0;
+  margin-top: 6px;
+}
+input[type=range].win-vertical:disabled::-ms-fill-upper {
+  margin-left: 0;
+  margin-bottom: 5px;
+}
+input[type=range].win-vertical::-ms-ticks-before,
+input[type=range].win-vertical::-ms-ticks-after {
+  width: 5px;
+  height: 100%;
+  display: none;
+}
+input[type=range].win-vertical:disabled:lang(ar)::-ms-fill-lower,
+input[type=range].win-vertical:disabled:lang(dv)::-ms-fill-lower,
+input[type=range].win-vertical:disabled:lang(fa)::-ms-fill-lower,
+input[type=range].win-vertical:disabled:lang(he)::-ms-fill-lower,
+input[type=range].win-vertical:disabled:lang(ku-Arab)::-ms-fill-lower,
+input[type=range].win-vertical:disabled:lang(pa-Arab)::-ms-fill-lower,
+input[type=range].win-vertical:disabled:lang(prs)::-ms-fill-lower,
+input[type=range].win-vertical:disabled:lang(ps)::-ms-fill-lower,
+input[type=range].win-vertical:disabled:lang(sd-Arab)::-ms-fill-lower,
+input[type=range].win-vertical:disabled:lang(syr)::-ms-fill-lower,
+input[type=range].win-vertical:disabled:lang(ug)::-ms-fill-lower,
+input[type=range].win-vertical:disabled:lang(ur)::-ms-fill-lower,
+input[type=range].win-vertical:disabled:lang(qps-plocm)::-ms-fill-lower {
+  margin-left: 0;
+}
+input[type=range].win-vertical:disabled:lang(ar)::-ms-fill-upper,
+input[type=range].win-vertical:disabled:lang(dv)::-ms-fill-upper,
+input[type=range].win-vertical:disabled:lang(fa)::-ms-fill-upper,
+input[type=range].win-vertical:disabled:lang(he)::-ms-fill-upper,
+input[type=range].win-vertical:disabled:lang(ku-Arab)::-ms-fill-upper,
+input[type=range].win-vertical:disabled:lang(pa-Arab)::-ms-fill-upper,
+input[type=range].win-vertical:disabled:lang(prs)::-ms-fill-upper,
+input[type=range].win-vertical:disabled:lang(ps)::-ms-fill-upper,
+input[type=range].win-vertical:disabled:lang(sd-Arab)::-ms-fill-upper,
+input[type=range].win-vertical:disabled:lang(syr)::-ms-fill-upper,
+input[type=range].win-vertical:disabled:lang(ug)::-ms-fill-upper,
+input[type=range].win-vertical:disabled:lang(ur)::-ms-fill-upper,
+input[type=range].win-vertical:disabled:lang(qps-plocm)::-ms-fill-upper {
+  margin-right: 0;
+}
+input[type=range].win-vertical:lang(ar),
+input[type=range].win-vertical:lang(dv),
+input[type=range].win-vertical:lang(fa),
+input[type=range].win-vertical:lang(he),
+input[type=range].win-vertical:lang(ku-Arab),
+input[type=range].win-vertical:lang(pa-Arab),
+input[type=range].win-vertical:lang(prs),
+input[type=range].win-vertical:lang(ps),
+input[type=range].win-vertical:lang(sd-Arab),
+input[type=range].win-vertical:lang(syr),
+input[type=range].win-vertical:lang(ug),
+input[type=range].win-vertical:lang(ur),
+input[type=range].win-vertical:lang(qps-plocm) {
+  writing-mode: bt-rl;
+}
+input[type=range]::-ms-track {
+  border: 1px solid ButtonText;
+  background-color: #1f1f1f;
+  color: transparent;
+}
+input[type=range]:disabled::-ms-track {
+  border-color: #1f1f1f;
+}
+input[type=range]::-ms-fill-lower {
+  background-color: #3e65ff !important;
+}
+form.readOnlyMode input[type=range]::-ms-fill-lower {
+  background-color: #999 !important;
+}
+input[type=range]:disabled::-ms-fill-lower {
+  background-color: transparent;
+}
+input[type=range]::-ms-ticks-before,
+input[type=range]::-ms-ticks-after {
+  color: ButtonText;
+}
+input[type=range]:disabled::-ms-ticks-before,
+input[type=range]:disabled::-ms-ticks-after {
+  color: #1f1f1f;
+}
+input[type=range]::-ms-thumb {
+  background-color: white;
+  height: 23px;
+  position: absolute;
+  margin-top: -6px;
+  margin-bottom: -6px;
+}
+input[type=range].win-vertical::-ms-thumb {
+  border-left-style: none;
+  border-right-style: none;
+  border-top: 1px solid HighlightText;
+  border-bottom: 1px solid HighlightText;
+}
+input[type=range]:active::-ms-thumb {
+  background-color: white;
+}
+input[type=range]:disabled::-ms-thumb,
+input[type=range]:disabled:active::-ms-thumb {
+  background-color: GrayText;
+  border-color: GrayText;
+}
+
+
+
+
+
+
+/* 
+
+	Special Items
+	PhoneItem 
+	---------------------------------- 
+	
+*/
+
+
+fieldset input.phoneitem {
+    float: left;
+    width: 54%;
+    margin-left: 8px;
+}
+fieldset select.phoneitem {
+    float: left;
+    width: 33%;
+}
+fieldset .inputContainer .clearFix {
+    margin-bottom: 14px;
+}
+form.readOnlyMode input.phoneitem {
+    float: right;
+    width: 55%;
+    margin-top: 0px !important;
+}
+form.readOnlyMode select.phoneitem {
+    color: #AAA;
+    -webkit-text-fill-color: #AAA;
+    margin-top: 1px;
+    width: 28%;
+}
+form.readOnlyMode input.phoneitem {
+    width: 60%;
+}
+form.readOnlyMode input.phoneitem + .telInputReadOnly {
+    margin-top: -51px;
+}
+form.readOnlyMode .inputContainer input.phoneitem + .telInputReadOnly {
+    margin-top: -5px;
+}
+
+fieldset div[class^="field_"] a {
+    display: block;
+    width: 100%;
+    box-sizing: border-box;
+    font-size: 16px;
+}
