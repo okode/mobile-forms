@@ -8,6 +8,4 @@
 
 #import <Foundation/Foundation.h>
 
-@interface MFKit : NSObject
-
-@end
+#import "MFForm.h"

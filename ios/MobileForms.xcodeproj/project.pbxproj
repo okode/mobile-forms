@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		3E66F4711C6DE8480045E4AC /* MFKit.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 3E66F4701C6DE8480045E4AC /* MFKit.h */; };
-		3E66F4731C6DE8480045E4AC /* MFKit.m in Sources */ = {isa = PBXBuildFile; fileRef = 3E66F4721C6DE8480045E4AC /* MFKit.m */; };
 		3E66F47B1C6DE9330045E4AC /* MFForm.m in Sources */ = {isa = PBXBuildFile; fileRef = 3E66F47A1C6DE9330045E4AC /* MFForm.m */; };
 /* End PBXBuildFile section */
 
@@ -28,7 +27,6 @@
 /* Begin PBXFileReference section */
 		3E66F46D1C6DE8480045E4AC /* libMobileForms.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libMobileForms.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		3E66F4701C6DE8480045E4AC /* MFKit.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MFKit.h; sourceTree = "<group>"; };
-		3E66F4721C6DE8480045E4AC /* MFKit.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MFKit.m; sourceTree = "<group>"; };
 		3E66F4791C6DE9330045E4AC /* MFForm.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MFForm.h; sourceTree = "<group>"; };
 		3E66F47A1C6DE9330045E4AC /* MFForm.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MFForm.m; sourceTree = "<group>"; };
 		3E66F47D1C6E1B970045E4AC /* mobileforms */ = {isa = PBXFileReference; lastKnownFileType = folder; name = mobileforms; path = ../assets/mobileforms; sourceTree = "<group>"; };
@@ -68,7 +66,6 @@
 				3E66F4791C6DE9330045E4AC /* MFForm.h */,
 				3E66F47A1C6DE9330045E4AC /* MFForm.m */,
 				3E66F4701C6DE8480045E4AC /* MFKit.h */,
-				3E66F4721C6DE8480045E4AC /* MFKit.m */,
 			);
 			path = MobileForms;
 			sourceTree = "<group>";
@@ -130,7 +127,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				3E66F47B1C6DE9330045E4AC /* MFForm.m in Sources */,
-				3E66F4731C6DE8480045E4AC /* MFKit.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
