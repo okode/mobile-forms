@@ -7,8 +7,6 @@ Pod::Spec.new do |s|
   s.authors             = 'Okode'
   s.source              = { :git => 'https://github.com/okode/mobileforms.git' }
   s.source_files        = 'ios/MobileForms/*.{h,m}'
-  s.resource_bundles = {
-      'MobileForms' => ['assets/mobileforms']
-  }
+  s.resource_bundles    = { 'MobileForms' => ['assets/mobileforms'] }
   s.requires_arc        = true
 end
