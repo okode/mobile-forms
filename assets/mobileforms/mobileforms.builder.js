@@ -48,13 +48,13 @@
             });
         }
     };
-    $.fn.MMobileFormsBuilder = function(method) {
+    $.fn.MobileFormsBuilder = function(method) {
         if (methods[method]) {
             return methods[method].apply(this, Array.prototype.slice.call(arguments, 1));
         } else if (typeof method === 'object' || !method) {
             return methods.init.apply(this, arguments);
         } else {
-            $.error('MMobileForms error: Method ' + method + ' does not exist');
+            $.error('MobileForms error: Method ' + method + ' does not exist');
         }
     };
 
@@ -258,7 +258,7 @@
             break;
 
         default:
-            console.log('MMobileForms error: Invalid or missing field type : ' + config.type);
+            console.log('MobileForms error: Invalid or missing field type : ' + config.type);
             return;
         }
         
