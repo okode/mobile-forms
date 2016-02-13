@@ -134,17 +134,17 @@ JavaScript implementation
 **Usage**
 
 ```html
-    <script src="mmobileforms.libraries.js"></script>
-    <script src="mmobileforms.utils.js"></script>
-    <script src="mmobileforms.populator.js"></script>
-    <script src="mmobileforms.builder.js"></script>
-    <script src="mmobileforms.js"></script>
+    <script src="mobileforms.libraries.js"></script>
+    <script src="mobileforms.utils.js"></script>
+    <script src="mobileforms.populator.js"></script>
+    <script src="mobileforms.builder.js"></script>
+    <script src="mobileforms.js"></script>
     <script>
         var params = {
             jsonForm : form1,
             ...
         };
-        var mmobileform = new MMobileForms(params);
+        var mobileform = new MobileForms(params);
     </script>
 ```
 **Params**
@@ -174,11 +174,11 @@ iOS implementation
 
 ```objective-c
 #import "ViewController.h"
-#import "MMobileForms.h"
+#import "MobileForms.h"
 
-@interface ViewController () <MMobileFormsDelegate>
+@interface ViewController () <MobileFormsDelegate>
 
-@property (nonatomic, strong) MMobileForms *form;
+@property (nonatomic, strong) MobileForms *form;
 
 @end
 
@@ -192,22 +192,22 @@ iOS implementation
     NSString *jsonFile = [[NSBundle mainBundle] pathForResource:@"myJsonForm" ofType:@"json"];
     NSString* jsonFormString = [NSString stringWithContentsOfFile:jsonFile encoding:NSUTF8StringEncoding error:nil];
 
-    // init MMobileForm
-    self.form = [[MMobileForms alloc] initForm:jsonFormString controller:self];
+    // init MobileForm
+    self.form = [[MobileForms alloc] initForm:jsonFormString controller:self];
     self.form.delegate = self;
 }
 
-##### pragma mark - MMobileForms Delegate (optional)
+##### pragma mark - MobileForms Delegate (optional)
 
-- (void)mmobileFormsResult:(NSString*)data
+- (void)mobileFormsResult:(NSString*)data
 {
-    NSLog(@"mmobileFormsResult : %@", data); // submitted data
+    NSLog(@"mobileFormsResult : %@", data); // submitted data
 }
 
-- (void)mmobileFormsEvent:(MMobileFormsEventType)eventType element:(NSString*)element elementValue:(NSString*)value
+- (void)mobileFormsEvent:(MobileFormsEventType)eventType element:(NSString*)element elementValue:(NSString*)value
 {
     if(eventType == ValidateError) {
-        NSLog(@"mmobileFormsEvent : ValidateError in input: %@ value: '%@'", element, value);
+        NSLog(@"mobileFormsEvent : ValidateError in input: %@ value: '%@'", element, value);
     }
 }
 
@@ -236,8 +236,8 @@ iOS implementation
 **Callbacks**
 
 ```objective-c
-- (void)mmobileFormsResult:(NSString*)data;
-- (void)mmobileFormsEvent:(MMobileFormsEventType)eventType element:(NSString*)element elementValue:(NSString*)value;
+- (void)mobileFormsResult:(NSString*)data;
+- (void)mobileFormsEvent:(MobileFormsEventType)eventType element:(NSString*)element elementValue:(NSString*)value;
 ```
 
 Android implementation
@@ -247,26 +247,26 @@ Android implementation
 ```java
 public class ViewController extends ActionBarActivity implements ViewController {
 
-    private MmobileForms mmobileForms;
+    private MmobileForms mobileForms;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_demo);
         
-        mmobileForms = findViewById(R.id.myForm);
-        mmobileForms.setFormModel(getJsonModel("MMobileForms/formModel.json");
-        mmobileForms.setController(this);
+        mobileForms = findViewById(R.id.myForm);
+        mobileForms.setFormModel(getJsonModel("MobileForms/formModel.json");
+        mobileForms.setController(this);
     }
 
     @Override
-    public void mmobileFormsResult(String data){
-        Log.d("MMobile forms data: ", data);
+    public void mobileFormsResult(String data){
+        Log.d("Mobile forms data: ", data);
     }
 
     @Override
-    public void mmobileFormsEvent(EventType eventType, String element, String value){
+    public void mobileFormsEvent(EventType eventType, String element, String value){
         if(eventType == EventType.VALIDATEERROR) {
-            Log.d("MMobile forms event: ", String.format("ValidatError in input: %s value: %s", element, value));
+            Log.d("Mobile forms event: ", String.format("ValidatError in input: %s value: %s", element, value));
         }
     }
 }
@@ -292,28 +292,28 @@ Windows Phone implementation
 ```cs
 public class MyView : ViewModelBase
 {
-    private MmobileForms _mmobileForms;
+    private MmobileForms _mobileForms;
     
     public MmobileForms()
     {
-        PropertyChanged += mmobileFormsEvent_PropertyChanged; 
-        PropertyChanged += mmobileFormsEventError_PropertyChanged; 
+        PropertyChanged += mobileFormsEvent_PropertyChanged; 
+        PropertyChanged += mobileFormsEventError_PropertyChanged; 
     }
     
-    private void mmobileFormsEvent_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+    private void mobileFormsEvent_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
     {
-        _mmobileForms.setFormModel(JsonConvert("MMobileForms/formModel.json"));
+        _mobileForms.setFormModel(JsonConvert("MobileForms/formModel.json"));
     }
     
-    void mmobileFormsResult(string _data)
+    void mobileFormsResult(string _data)
     {
-        System.Diagnostics.Debug.WriteLine("MMobile forms data: ", _data);
+        System.Diagnostics.Debug.WriteLine("Mobile forms data: ", _data);
     }
     
-    void mmobileFormsEventError_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e, string elem, string value)
+    void mobileFormsEventError_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e, string elem, string value)
     { 
         if(e.PropertyName==VALIDATEERROR)
-        System.Diagnostics.Debug.WriteLine("MMobile forms event ValidatError in input" + elem.ToString(), value.ToString());
+        System.Diagnostics.Debug.WriteLine("Mobile forms event ValidatError in input" + elem.ToString(), value.ToString());
     }
 }
 ```
