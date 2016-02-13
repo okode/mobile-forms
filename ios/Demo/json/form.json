@@ -1,0 +1,64 @@
+{
+    "id":"contactDetailForm",
+    "sections":[
+                {
+                "title": "Full name",
+                "fields":[
+                        {
+                        "label": "First name",
+                        "type": "text",
+                        "name": "firstName"
+                        },
+                        {
+                        "label": "Last name",
+                        "type": "text",
+                        "name": "lastName"
+                        }
+                        ]
+                },
+                {
+                "title":"Phone",
+                "fields":[
+                          {
+                          "label":"",
+                          "type":"phoneitem",
+                          "name":"phone[]",
+                          "nametype":"phonetype",
+                          "namephone":"phonenumber",
+                          "phonetypevalues":"home|work|mobile",
+                          "phonetypelabels":"Home|Work|Mobile"
+                          }
+                          ]
+                },
+                {
+                "title":"Contact",
+                "fields":[
+                          {
+                          "label": "Email",
+                          "type":"email",
+                          "name":"email"
+                          },
+                          {
+                          "label": "Address",
+                          "type": "text",
+                          "name": "address"
+                          }
+                          ]
+                },
+                {
+                "title":"Remarks",
+                "fields":[
+                          {
+                          "label":"",
+                          "placeholder":"Write here your remarks",
+                          "type":"textarea",
+                          "name":"remarks",
+                          "value":"",
+                          "filter":"",
+                          "error":""
+                          }
+                          ]
+                }
+                ],
+    "submit": "Accept"
+}
