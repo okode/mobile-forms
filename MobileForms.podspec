@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name                = 'MobileForms'
-  s.version             = '0.1'
+  s.version             = '0.0.1'
   s.summary             = 'Dynamic Web Forms for Mobile Apps'
   s.homepage            = 'http://www.okode.com'
   s.license             = 'Apache License, Version 2.0'
