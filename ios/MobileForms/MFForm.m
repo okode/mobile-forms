@@ -87,7 +87,11 @@
         NSLog(@"MFForm warning: 'setFormNamed:name' must be called before 'load'");
     }
     
-    NSString *jsonFile = [[NSBundle bundleForClass:[self class]] pathForResource:name ofType:FORMJSON_EXTENSION inDirectory:FORMJSON_DIRECTORY];
+    NSString* bundlePath = [[NSBundle bundleForClass:self.class]
+                            pathForResource:@"MobileForms" ofType:@"bundle"];
+    NSBundle* bundle = [NSBundle bundleWithPath:bundlePath];
+    
+    NSString *jsonFile = [bundle pathForResource:name ofType:FORMJSON_EXTENSION inDirectory:FORMJSON_DIRECTORY];
     if([[NSFileManager defaultManager] fileExistsAtPath:jsonFile]) {
         self.jsonForm = [NSString stringWithContentsOfFile:jsonFile encoding:NSUTF8StringEncoding error:nil];
     } else {
@@ -127,7 +131,10 @@
     }
     
     // Load HTML in webview
-    NSString *indexPath = [[NSBundle bundleForClass:[self class]] pathForResource:FORMHTML_FILENAME ofType:FORMHTML_EXTENSION inDirectory:FORMHTML_DIRECTORY];
+    NSString* bundlePath = [[NSBundle bundleForClass:self.class]
+                            pathForResource:@"MobileForms" ofType:@"bundle"];
+    NSBundle* bundle = [NSBundle bundleWithPath:bundlePath];
+    NSString *indexPath = [bundle pathForResource:FORMHTML_FILENAME ofType:FORMHTML_EXTENSION inDirectory:FORMHTML_DIRECTORY];
     [self.webView loadRequest:[NSURLRequest requestWithURL:[NSURL fileURLWithPath:indexPath]]];
 }
 
