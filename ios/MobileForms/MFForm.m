@@ -216,7 +216,7 @@
     bool callbackResultImplemented = [self.delegate respondsToSelector:@selector(MFFormResult:)];
     bool callbackEventImplemented = [self.delegate respondsToSelector:@selector(MFFormEvent:element:elementValue:)];
     bool eventUrl = self.delegate &&
-    [[[request URL] scheme] isEqualToString:@"mmobileforms"] &&
+    [[[request URL] scheme] isEqualToString:@"mobileforms"] &&
     [[[request URL] host] isEqualToString:@"event"];
     // eventUrl if request starts with mobileforms://event/
     if (eventUrl) {
