@@ -1,21 +1,19 @@
 //
-//  ViewController.swift
-//  Demo
+// MobileForms - Demo
 //
-//  Created by Pedro Jorquera on 13/2/16.
-//  Copyright © 2016 Okode. All rights reserved.
+// Copyright (C) 2016 Okode (www.okode.com). All rights reserved.
 //
 
 import UIKit
 import MobileForms
 
-class ViewController: UIViewController, MFFormDelegate {
-
-    var form: MFForm!
+class ViewController: UIViewController, FormDelegate {
+    
+    var form: Form!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        form = MFForm(controlledBy: self)
+        form = Form(controller: self)
         form.delegate = self
         
         let filepath = NSBundle.mainBundle().pathForResource("form", ofType: "json", inDirectory: "json")
@@ -26,11 +24,14 @@ class ViewController: UIViewController, MFFormDelegate {
         } catch { }
     }
 
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+    func result(data: String) {
+        print("Result: \(data)")
+    }
+    
+    func event(eventType: FormEventType, element: String, value: String) {
+        print("Event: \(eventType), Element: \(element), Value: \(value)")
     }
 
-
+    
 }
 
