@@ -4,7 +4,7 @@ MobileForms
 Introduction
 ------------
 
-MobileForms allows create forms dynamically, through a form definition in JSON, a form with amply definable fields, with all its attributes and validation rules, receiving callbacks for events in their fields (focus, change, ...), and submitted form (getting a JSON response with the model defined in the form).
+MobileForms allows creating forms dynamically by using a form definition in JSON format. All generated forms has definable fields with all its attributes and validation rules embeded in the same definition file and supports receiving callbacks in native code for different event types as focus, change or submitting form generating a JSON response with the model defined in the form.
 
 MobileForms provides a native wrapper to generate form via a unique definition in JSON for iOS, Android and Windows Phone plataforms, having a native appearance each. The style/appearance on each platform can be defined with stylesheets (CSS) own, allowing you to change the appearance of certain elements (or form completly) in a specific platform or unifying all platforms with the same style.
 
