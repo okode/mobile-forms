@@ -6,16 +6,16 @@
 
 import UIKit
 
-let kFormHtmlFilename = "index.mobileforms"
-let kFormHtmlExtension = "html"
-let kFormHtmlDirectory = "mobileforms"
-let kJSFuncSetReadOnlyForm = "setReadOnly(true);"
-let kJSSetEditableForm = "setReadOnly(false);"
-let kJSFuncGetFormData = "getFormData();"
-let kJSFuncGetFormErrors = "getFormErrors();"
-let kJSFuncIsFormValid = "isFormValid();"
+let kFormHtmlFilename           = "index.mobileforms"
+let kFormHtmlExtension          = "html"
+let kFormHtmlDirectory          = "mobileforms"
+let kJSFuncSetReadOnlyForm      = "setReadOnly(true);"
+let kJSSetEditableForm          = "setReadOnly(false);"
+let kJSFuncGetFormData          = "getFormData();"
+let kJSFuncGetFormErrors        = "getFormErrors();"
+let kJSFuncIsFormValid          = "isFormValid();"
 let kJSFuncGetFormDataValidated = "getFormDataValidated();"
-let kJSFuncInit = "init();"
+let kJSFuncInit                 = "init();"
 
 public enum FormEventType { case Submit, SubmitInvalid, FocusIn, FocusOut, Change, ValidateError, Link, Other }
 
@@ -24,73 +24,57 @@ public protocol FormDelegate {
     func event(eventType: FormEventType, element: String, value: String)
 }
 
-public class Form: UIViewController, UIWebViewDelegate {
+public class Form: UIView, UIWebViewDelegate {
 
     public var delegate: FormDelegate?
-    
+    public var layout = ""
+    public var data   = ""
+
     var webView: UIWebView?
-    var jsonForm = ""
-    var jsonPopulateData = ""
-    var loadCalled = false
     var webViewLoaded = false
+    
     var pendingJSCommands = [String]()
     
-    public required init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        setup()
+    }
+
+    required public init(coder : NSCoder) {
+        super.init(coder:coder)!
+        setup()
     }
     
-    public init(controller: UIViewController) {
-        super.init(nibName: nil, bundle: nil)
-        
-        webView = UIWebView(frame: view.frame)
+    func setup() {
+        webView = UIWebView(frame: frame)
         webView!.backgroundColor = UIColor.clearColor()
         webView!.delegate = self
-        
         webView!.alpha = 0.0
         webView!.autoresizingMask = [.FlexibleWidth, .FlexibleHeight, .FlexibleTopMargin, .FlexibleBottomMargin]
-        
-        controller.view.addSubview(webView!)
-        
+        addSubview(webView!)
         webViewLoaded = false
     }
-    
-    public func setForm(json: String) {
-        if (loadCalled) {
-            print("Form warning: 'json' must be called before 'load'")
-        }
-        jsonForm = json
-    }
-    
-    public func setPopulateData(json: String) {
-        if(loadCalled) {
-            print("Form warning: 'setPopulateData:jsonString' must be called before 'load'")
-        }
-        jsonPopulateData = json
-    }
-    
-    public func setFrame(frame: CGRect) {
-        if(loadCalled) {
-            print("Form warning: 'setFrame:frame' must be called before 'load'")
-        }
-        webView!.frame = frame
-    }
-    
+
     public func load() {
-        if(jsonForm == "") {
+        if(layout == "") {
             print("Form error: JSON form is not defined, please use setFormNamed:name or setForm:jsonString before load")
             return
         }
         
-        let bundlePath = NSBundle(forClass: self.classForCoder).pathForResource("MobileForms", ofType: "bundle")
+        let classForCoderBundle = NSBundle(forClass: self.classForCoder)
+        var bundlePath = classForCoderBundle.pathForResource("MobileForms", ofType: "bundle")
+        if (bundlePath == nil) {
+            bundlePath = classForCoderBundle.pathForResource("MobileForms", ofType: "bundle", inDirectory: "Frameworks/MobileForms.framework")
+        }
         let bundle = NSBundle(path: bundlePath!)
         let indexPath = bundle!.pathForResource(kFormHtmlFilename, ofType: kFormHtmlExtension, inDirectory: kFormHtmlDirectory)
-        webView?.loadRequest(NSURLRequest(URL: NSURL(fileURLWithPath: indexPath!)))
+        webView!.loadRequest(NSURLRequest(URL: NSURL(fileURLWithPath: indexPath!)))
     }
     
     public func setReadOnlyMode(readOnlyMode: Bool) {
         let jsString = (readOnlyMode ? kJSFuncSetReadOnlyForm : kJSSetEditableForm)
         if(webViewLoaded) {
-            webView?.stringByEvaluatingJavaScriptFromString(jsString)
+            webView!.stringByEvaluatingJavaScriptFromString(jsString)
         } else {
             pendingJSCommands.append(jsString)
         }
@@ -278,9 +262,9 @@ public class Form: UIViewController, UIWebViewDelegate {
     }
 
     public func webViewDidFinishLoad(webView: UIWebView) {
-        webView.stringByEvaluatingJavaScriptFromString(jsFuncSetJsonForm(jsonForm))
-        if (jsonPopulateData != "") {
-            webView.stringByEvaluatingJavaScriptFromString(jsFuncSetJsonPopulateData(self.jsonPopulateData))
+        webView.stringByEvaluatingJavaScriptFromString(jsFuncSetJsonForm(layout))
+        if (data != "") {
+            webView.stringByEvaluatingJavaScriptFromString(jsFuncSetJsonPopulateData(data))
         }
         
         webView.stringByEvaluatingJavaScriptFromString(kJSFuncInit)
