@@ -7,20 +7,17 @@
 import UIKit
 import MobileForms
 
-class ViewController: UIViewController, FormDelegate {
-    
-    var form: Form!
+class ViewController: Form, FormDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        form = Form(controller: self)
-        form.delegate = self
+        delegate = self
         
         let filepath = NSBundle.mainBundle().pathForResource("form", ofType: "json", inDirectory: "json")
         do {
             let contents = try NSString(contentsOfFile: filepath!, usedEncoding: nil) as String
-            form.setForm(contents)
-            form.load()
+            setForm(contents)
+            loadForm()
         } catch { }
     }
 

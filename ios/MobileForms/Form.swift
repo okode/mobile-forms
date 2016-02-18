@@ -35,13 +35,7 @@ public class Form: UIViewController, UIWebViewDelegate {
     var webViewLoaded = false
     var pendingJSCommands = [String]()
     
-    public required init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
-    }
-    
-    public init(controller: UIViewController) {
-        super.init(nibName: nil, bundle: nil)
-        
+    override public func viewDidLoad() {
         webView = UIWebView(frame: view.frame)
         webView!.backgroundColor = UIColor.clearColor()
         webView!.delegate = self
@@ -49,7 +43,7 @@ public class Form: UIViewController, UIWebViewDelegate {
         webView!.alpha = 0.0
         webView!.autoresizingMask = [.FlexibleWidth, .FlexibleHeight, .FlexibleTopMargin, .FlexibleBottomMargin]
         
-        controller.view.addSubview(webView!)
+        view.addSubview(webView!)
         
         webViewLoaded = false
     }
@@ -75,13 +69,17 @@ public class Form: UIViewController, UIWebViewDelegate {
         webView!.frame = frame
     }
     
-    public func load() {
+    public func loadForm() {
         if(jsonForm == "") {
             print("Form error: JSON form is not defined, please use setFormNamed:name or setForm:jsonString before load")
             return
         }
         
-        let bundlePath = NSBundle(forClass: self.classForCoder).pathForResource("MobileForms", ofType: "bundle")
+        let classForCoderBundle = NSBundle(forClass: self.classForCoder)
+        var bundlePath = classForCoderBundle.pathForResource("MobileForms", ofType: "bundle")
+        if (bundlePath == nil) {
+            bundlePath = classForCoderBundle.pathForResource("MobileForms", ofType: "bundle", inDirectory: "Frameworks/MobileForms.framework")
+        }
         let bundle = NSBundle(path: bundlePath!)
         let indexPath = bundle!.pathForResource(kFormHtmlFilename, ofType: kFormHtmlExtension, inDirectory: kFormHtmlDirectory)
         webView?.loadRequest(NSURLRequest(URL: NSURL(fileURLWithPath: indexPath!)))
