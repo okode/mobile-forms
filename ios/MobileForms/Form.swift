@@ -5,6 +5,7 @@
 //
 
 import UIKit
+import WebKit
 
 let kFormHtmlFilename           = "index.mobileforms"
 let kFormHtmlExtension          = "html"
@@ -24,13 +25,13 @@ public protocol FormDelegate {
     func event(eventType: FormEventType, element: String, value: String)
 }
 
-public class Form: UIView, UIWebViewDelegate {
+public class Form: UIView, WKNavigationDelegate {
 
     public var delegate: FormDelegate?
     public var layout = ""
     public var data   = ""
 
-    var webView: UIWebView?
+    var webView: WKWebView?
     var webViewLoaded = false
     
     var pendingJSCommands = [String]()
@@ -46,10 +47,10 @@ public class Form: UIView, UIWebViewDelegate {
     }
     
     func setup() {
-        webView = UIWebView(frame: frame)
+        webView = WKWebView(frame: frame)
         webView!.backgroundColor = UIColor.clearColor()
-        webView!.delegate = self
         webView!.alpha = 0.0
+        webView!.navigationDelegate = self
         webView!.autoresizingMask = [.FlexibleWidth, .FlexibleHeight, .FlexibleTopMargin, .FlexibleBottomMargin]
         addSubview(webView!)
         webViewLoaded = false
@@ -68,13 +69,15 @@ public class Form: UIView, UIWebViewDelegate {
         }
         let bundle = NSBundle(path: bundlePath!)
         let indexPath = bundle!.pathForResource(kFormHtmlFilename, ofType: kFormHtmlExtension, inDirectory: kFormHtmlDirectory)
+        
         webView!.loadRequest(NSURLRequest(URL: NSURL(fileURLWithPath: indexPath!)))
+        
     }
     
     public func setReadOnlyMode(readOnlyMode: Bool) {
         let jsString = (readOnlyMode ? kJSFuncSetReadOnlyForm : kJSSetEditableForm)
         if(webViewLoaded) {
-            webView!.stringByEvaluatingJavaScriptFromString(jsString)
+            webView!.evaluateJavaScript(jsString, completionHandler: nil)
         } else {
             pendingJSCommands.append(jsString)
         }
@@ -103,22 +106,28 @@ public class Form: UIView, UIWebViewDelegate {
     public func setPopulateDataAsync(json: String) {
         let jsString = jsFuncSetPopulateData(json)
         if(webViewLoaded) {
-            webView!.stringByEvaluatingJavaScriptFromString(jsString)
+            webView!.evaluateJavaScript(jsString, completionHandler: nil)
         } else {
             pendingJSCommands.append(jsString)
         }
     }
     
-    public func getFormValues() -> String {
-        return webView!.stringByEvaluatingJavaScriptFromString(kJSFuncGetFormData)!
+    public func requestFormValue(completionHandler: ((String?) -> Void)?) {
+        webView!.evaluateJavaScript(kJSFuncGetFormData) { (formValue: AnyObject?, _: NSError?) -> Void in
+            completionHandler?(formValue as? String)
+        }
     }
     
-    public func getFormErrors() -> String {
-        return webView!.stringByEvaluatingJavaScriptFromString(kJSFuncGetFormErrors)!
+    public func requestFormErrors(completionHandler: ((String?) -> Void)?) {
+        webView!.evaluateJavaScript(kJSFuncGetFormErrors) { (formValue: AnyObject?, _: NSError?) -> Void in
+            completionHandler?(formValue as? String)
+        }
     }
     
-    public func isFormValid() -> Bool {
-        return webView!.stringByEvaluatingJavaScriptFromString(kJSFuncIsFormValid) == "true"
+    public func requestFormValid(completionHandler: ((Bool?) -> Void)?) {
+        webView!.evaluateJavaScript(kJSFuncGetFormErrors) { (formValue: AnyObject?, _: NSError?) -> Void in
+            completionHandler?((formValue as? String) == "true")
+        }
     }
     
     public func addCSSFile(cssFilePath: String, overrideAllStyles: Bool) {
@@ -133,7 +142,7 @@ public class Form: UIView, UIWebViewDelegate {
         }
         let jsString = jsFuncAddCSS(cssContent!, data: overrideAllStyles ? "true" : "false")
         if (webViewLoaded) {
-            webView!.stringByEvaluatingJavaScriptFromString(jsString)
+            webView!.evaluateJavaScript(jsString, completionHandler: nil)
         } else {
             pendingJSCommands.append(jsString)
         }
@@ -161,7 +170,7 @@ public class Form: UIView, UIWebViewDelegate {
         jsContent = escapeJavaScriptString(jsContent!)
         let jsString = jsFuncAddJS(jsContent!)
         if (webViewLoaded) {
-            webView!.stringByEvaluatingJavaScriptFromString(jsString)
+            webView!.evaluateJavaScript(jsString, completionHandler: nil)
         } else {
             pendingJSCommands.append(jsString)
         }
@@ -239,7 +248,9 @@ public class Form: UIView, UIWebViewDelegate {
         return FormEventType.Other
     }
     
-    public func webView(webView: UIWebView, shouldStartLoadWithRequest request: NSURLRequest, navigationType: UIWebViewNavigationType) -> Bool {
+    public func webView(webView: WKWebView, decidePolicyForNavigationAction navigationAction: WKNavigationAction, decisionHandler: (WKNavigationActionPolicy) -> Void) {
+        
+        let request = navigationAction.request
         let eventUrl = (request.URL?.scheme == "mobileforms" && request.URL?.host == "event")
         if (eventUrl) {
             
@@ -249,37 +260,40 @@ public class Form: UIView, UIWebViewDelegate {
             let eventType = getEventType(params["type"]!, value: value!)
             
             if (eventType == FormEventType.Submit) {
-                let data = webView.stringByEvaluatingJavaScriptFromString(kJSFuncGetFormDataValidated)
-                delegate?.result(data!)
+                webView.evaluateJavaScript(kJSFuncGetFormDataValidated, completionHandler: {(result:AnyObject?, error: NSError?) -> Void in
+                    let data = result as? String
+                    self.delegate?.result(data!)
+                })
             }
-            
+
             delegate?.event(eventType, element: element!, value: value!)
-            
-            return false
+            decisionHandler(WKNavigationActionPolicy.Cancel)
         }
         
-        return true
+        decisionHandler(WKNavigationActionPolicy.Allow)
+        
     }
 
-    public func webViewDidFinishLoad(webView: UIWebView) {
-        webView.stringByEvaluatingJavaScriptFromString(jsFuncSetJsonForm(layout))
-        if (data != "") {
-            webView.stringByEvaluatingJavaScriptFromString(jsFuncSetJsonPopulateData(data))
-        }
-        
-        webView.stringByEvaluatingJavaScriptFromString(kJSFuncInit)
-        UIView.animateWithDuration(0.25) { () -> Void in
-            webView.alpha = 1.0
-        }
-        
-        // Execute pending JS commands
-        if (pendingJSCommands.count > 0) {
-            for command in pendingJSCommands {
-                webView.stringByEvaluatingJavaScriptFromString(command)
+    public func webView(webView: WKWebView, didFinishNavigation navigation: WKNavigation!) {
+        webView.evaluateJavaScript(jsFuncSetJsonForm(layout)) { (_: AnyObject?, _: NSError?) -> Void in
+            if (self.data != "") {
+                webView.evaluateJavaScript(self.jsFuncSetJsonPopulateData(self.data), completionHandler: nil)
             }
-            pendingJSCommands.removeAll()
+            webView.evaluateJavaScript(kJSFuncInit, completionHandler: { (_: AnyObject?, _: NSError?) -> Void in
+                UIView.animateWithDuration(0.25) { () -> Void in
+                    webView.alpha = 1.0
+                }
+                
+                // Execute pending JS commands
+                if (self.pendingJSCommands.count > 0) {
+                    for command in self.pendingJSCommands {
+                        webView.evaluateJavaScript(command, completionHandler: nil)
+                    }
+                    self.pendingJSCommands.removeAll()
+                }
+                self.webViewLoaded = true
+            })
         }
-        webViewLoaded = true
     }
     
 }
