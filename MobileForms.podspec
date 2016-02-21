@@ -16,4 +16,5 @@ Pod::Spec.new do |s|
   s.source_files     = 'ios/MobileForms/*.swift'
   s.resource_bundles = { 'MobileForms' => ['assets/mobileforms'] }
   s.requires_arc     = true
+  s.frameworks       = "WebKit"
 end
