@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name             = 'MobileForms'
-  s.version          = '0.0.3'
+  s.version          = '0.0.4'
   s.summary          = 'A multiplatform dynamic Web forms generator for mobile apps'
   s.description      = <<-DESC
                         MobileForms allows creating forms dynamically by using a form definition in JSON format. All
