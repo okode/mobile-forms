@@ -5,3 +5,6 @@ Podfile.lock
 Pods
 .gradle
 build/
+.idea/
+local.properties
+*.iml
