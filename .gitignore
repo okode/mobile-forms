@@ -3,3 +3,5 @@
 xcuserdata
 Podfile.lock
 Pods
+.gradle
+build/
