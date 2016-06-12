@@ -11,6 +11,9 @@ repositories {
     jcenter()
 }
 
+group = 'com.okode.mobileforms'
+version = '1.0'
+
 apply plugin: 'com.android.library'
 
 android {
