@@ -29,7 +29,7 @@ import java.util.List;
  * In order to make it work, you must put 'mobileforms' folder into your application assets folder.
  * Form is a Fragment, so it goes through this component lifecycles and needs to exists inside an activity, or a parent fragment.
  * It can be added programmatically or inflating a layout resource like other fragments.
- * By default, it is attached to the containing activity or parent fragment, so they must implement OnFormListener interface.
+ * By default, it is attached to the containing activity or parent fragment, so they must implement Listener interface.
  * An example of the usage of this fragment from an activity, inflating it from layout:
  *
  * protected void onCreate(Bundle savedInstanceState) {
@@ -107,7 +107,7 @@ public class Form extends Fragment {
 
 
     private WebView webView;
-    private OnFormListener mListener;
+    private Listener listener;
 
     private boolean loadCalled;
     private boolean webViewLoaded;
@@ -121,7 +121,7 @@ public class Form extends Fragment {
     /**
      * Interface that the listener activity or fragment must implement in order to communicate with the Form Fragment.
      */
-    public interface OnFormListener {
+    public interface Listener {
         /**
          * Tells the listener when the user submits valid form.
          *
@@ -156,18 +156,9 @@ public class Form extends Fragment {
         /**
          * Tells the listener if the current form is valid.
          *
-         * @param isFormValid true if the form is valid, false otherwise.
+         * @param formValid true if the form is valid, false otherwise.
          */
-        public void onIsFormValid(boolean isFormValid);
-    }
-
-    /**
-     * Initializes and returns a new Form Fragment. It is needed to put the fragment into a FragmentTransition.
-     *
-     * @return A new Form Fragment
-     */
-    public static Form newInstance() {
-        return new Form();
+        public void onFormValid(boolean formValid);
     }
 
     /**
@@ -191,19 +182,19 @@ public class Form extends Fragment {
         //Child fragment, set the callbacks to the parent fragment
         if (parentFragment != null) {
             try {
-                mListener = (OnFormListener) parentFragment;
+                listener = (Listener) parentFragment;
             } catch (ClassCastException e) {
                 throw new ClassCastException(parentFragment.toString()
-                        + " must implement OnFormListener");
+                        + " must implement Listener");
             }
         }
         //Normal fragment, set the callbacks to the activity
         else {
             try {
-                mListener = (OnFormListener) activity;
+                listener = (Listener) activity;
             } catch (ClassCastException e) {
                 throw new ClassCastException(activity.toString()
-                        + " must implement OnFormListener");
+                        + " must implement Listener");
             }
         }
     }
@@ -211,7 +202,7 @@ public class Form extends Fragment {
     @Override
     public void onDetach() {
         super.onDetach();
-        mListener = null;
+        listener = null;
     }
 
     @SuppressLint("SetJavaScriptEnabled")
@@ -254,12 +245,12 @@ public class Form extends Fragment {
                     if(eventType == FormEventType.FOCUS_IN){
                         updateFormData();
                     }
-                    if (mListener != null) {
+                    if (listener != null) {
                         if (eventType == FormEventType.SUBMIT) {
                             webView.loadUrl(JS_FUNC_GET_FORM_DATA_VALIDATED);
                         }
 
-                        mListener.onEvent(eventType, element, value);
+                        listener.onEvent(eventType, element, value);
                     }
                     return true;
                 } else if (url.startsWith(URL_TEL)) {
@@ -286,15 +277,15 @@ public class Form extends Fragment {
                     public boolean onJsAlert(WebView view, String url, String message, JsResult result) {
                         if (message.startsWith(ALERT_FORM_DATA_VALIDATED)) {
                             message = message.replace(ALERT_FORM_DATA_VALIDATED, "");
-                            if (mListener != null) {
-                                mListener.onSubmit(message);
+                            if (listener != null) {
+                                listener.onSubmit(message);
                             }
                             result.confirm();
                             return true;
                         } else if (message.startsWith(ALERT_FORM_DATA)) {
                             message = message.replace(ALERT_FORM_DATA, "");
-                            if (mListener != null) {
-                                mListener.onGetFormValues(message);
+                            if (listener != null) {
+                                listener.onGetFormValues(message);
                             }
                             result.confirm();
                             return true;
@@ -305,17 +296,17 @@ public class Form extends Fragment {
                             return true;
                         } else if (message.startsWith(ALERT_GET_FORM_ERRORS)) {
                             message = message.replace(ALERT_GET_FORM_ERRORS, "");
-                            if (mListener != null) {
-                                mListener.onGetFormErrors(message);
+                            if (listener != null) {
+                                listener.onGetFormErrors(message);
                             }
                             result.confirm();
                             return true;
 
                         } else if (message.startsWith(ALERT_IS_FORM_VALID)) {
                             message = message.replace(ALERT_IS_FORM_VALID, "");
-                            boolean isFormValid = Boolean.parseBoolean(message);
-                            if (mListener != null) {
-                                mListener.onIsFormValid(isFormValid);
+                            boolean formValid = Boolean.parseBoolean(message);
+                            if (listener != null) {
+                                listener.onFormValid(formValid);
                             }
                             result.confirm();
                             return true;
@@ -343,10 +334,10 @@ public class Form extends Fragment {
      * Sets the listener of the Form fragment. By default, the listener is set to the parent fragment (if exists) or to the activity otherwise, and attached to its lifecycle.
      * This method should be called only if that is not the desired behaviour. Setting the listener manually implies that the lifecycle should be also manually managed.
      *
-     * @param listener listener that implements OnFormListener interface.
+     * @param listener listener that implements Listener interface.
      */
-    public void setmListener(OnFormListener listener) {
-        mListener = listener;
+    public void setListener(Listener listener) {
+        this.listener = listener;
     }
 
 
@@ -536,7 +527,7 @@ public class Form extends Fragment {
     }
 
     /**
-     * Checks if the current form is valid. The result will be delivered to the listener through onIsFormValid callback.
+     * Checks if the current form is valid. The result will be delivered to the listener through onFormValid callback.
      */
     public void isFormValid() {
         webView.loadUrl(JS_FUNC_IS_FORM_VALID);
