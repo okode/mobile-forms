@@ -2,10 +2,10 @@ package com.okode.mobileforms;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.app.Fragment;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,10 +18,8 @@ import android.webkit.WebViewClient;
 
 import com.okode.mobileforms.utils.Files;
 
-import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -32,7 +30,6 @@ import java.util.List;
  * Form is a Fragment, so it goes through this component lifecycles and needs to exists inside an activity, or a parent fragment.
  * It can be added programmatically or inflating a layout resource like other fragments.
  * By default, it is attached to the containing activity or parent fragment, so they must implement OnFormListener interface.
- * <p/>
  * An example of the usage of this fragment from an activity, inflating it from layout:
  *
  * protected void onCreate(Bundle savedInstanceState) {
@@ -43,7 +40,6 @@ import java.util.List;
  * form.setFormNamed("form1");
  * form.load();
  * }
- * <p/>
  * Note that when adding the fragment programmatically, the FragmentTransaction is not synchronous by default, so the form will not be ready until onStart() is called.
  * Calls to methods before this state may fail.
  */
