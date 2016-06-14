@@ -1,8 +1,8 @@
 package com.okode.mobileforms;
 
 import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.app.Fragment;
+import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -16,13 +16,12 @@ import android.webkit.WebChromeClient;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
-import com.okode.mobileforms.utils.Files;
-
+import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
-
 
 /**
  * You use the Form class to embed webform in your application. Form allows to create forms dynamically, through a form definition in JSON.
@@ -43,6 +42,7 @@ import java.util.List;
  * Note that when adding the fragment programmatically, the FragmentTransaction is not synchronous by default, so the form will not be ready until onStart() is called.
  * Calls to methods before this state may fail.
  */
+@SuppressWarnings("UnusedDeclaration")
 public class Form extends Fragment {
 
 
@@ -127,14 +127,14 @@ public class Form extends Fragment {
          *
          * @param formResult Form data as json String serialized.
          */
-        public void onSubmit(String formResult);
+        void onSubmit(String formResult);
 
         /**
          * Tells the listener the current form data without validate.
          *
          * @param formValues Form data as json String serialized.
          */
-        public void onGetFormValues(String formValues);
+        void onGetFormValues(String formValues);
 
         /**
          * Tells the listener when an event has occurred in the form.
@@ -143,7 +143,7 @@ public class Form extends Fragment {
          * @param element   The form element name/id.
          * @param value     The current element value.
          */
-        public void onEvent(FormEventType eventType, String element, String value);
+        void onEvent(FormEventType eventType, String element, String value);
 
         /**
          * Tells the listener the current form errors. formErrors contains the array 'requiredErrors' with the empty required element names
@@ -151,14 +151,14 @@ public class Form extends Fragment {
          *
          * @param formErrors Form errors as json String serialized.
          */
-        public void onGetFormErrors(String formErrors);
+        void onGetFormErrors(String formErrors);
 
         /**
          * Tells the listener if the current form is valid.
          *
          * @param formValid true if the form is valid, false otherwise.
          */
-        public void onFormValid(boolean formValid);
+        void onFormValid(boolean formValid);
     }
 
     /**
@@ -176,8 +176,8 @@ public class Form extends Fragment {
     }
 
     @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
+    public void onAttach(Context context) {
+        super.onAttach(context);
         Fragment parentFragment = getParentFragment();
         //Child fragment, set the callbacks to the parent fragment
         if (parentFragment != null) {
@@ -191,9 +191,9 @@ public class Form extends Fragment {
         //Normal fragment, set the callbacks to the activity
         else {
             try {
-                listener = (Listener) activity;
+                listener = (Listener) context;
             } catch (ClassCastException e) {
-                throw new ClassCastException(activity.toString()
+                throw new ClassCastException(context.toString()
                         + " must implement Listener");
             }
         }
@@ -348,18 +348,24 @@ public class Form extends Fragment {
      * @param name The name of the file located in assets/forms folder, without including .json extension.
      */
     public void setFormNamed(String name) {
-        if (loadCalled) {
-             Log.w("MobileForms", "setFormNamed must be called before load");
-        }
-        InputStream json;
-        try {
-            json = getActivity().getAssets().open(String.format("%s/%s.%s", FORMJSON_DIRECTORY, name, FORMJSON_EXTENSION));
-        } catch (IOException e) {
-            Log.w("MobileForms", String.format("Form (json file) named %s not exists inside %s folder", name, FORMJSON_DIRECTORY));
-            return;
-        }
+        setFormFilename(String.format("%s/%s.%s", FORMJSON_DIRECTORY, name, FORMJSON_EXTENSION));
+    }
 
-        jsonForm = Files.readTextFile(json);
+    /**
+     * Sets form model loading json by full filename relative to assets folder.
+     * This method or setForm method must be called before load().
+     *
+     * @param filename The name of the file relative to assets folder.
+     */
+    public void setFormFilename(String filename) {
+        if (loadCalled) {
+            Log.w("MobileForms", "setFormFilename must be called before load");
+        }
+        try {
+            jsonForm = readText(getActivity().getAssets().open(filename));
+        } catch (IOException e) {
+            Log.w("MobileForms", String.format("Form filename %s could not be opened", filename));
+        }
     }
 
     /**
@@ -370,7 +376,7 @@ public class Form extends Fragment {
      */
     public void setForm(String jsonString) {
         if (loadCalled) {
-            Log.w("MobileForms", "setFormNamed must be called before load");
+            Log.w("MobileForms", "setForm must be called before load");
         }
         jsonForm = jsonString;
     }
@@ -383,7 +389,7 @@ public class Form extends Fragment {
      */
     public void setPopulateData(String jsonString) {
         if (loadCalled) {
-            Log.w("MobileForms", "setFormNamed must be called before load");
+            Log.w("MobileForms", "setPopulateData must be called before load");
         }
         jsonPopulateData = jsonString;
     }
@@ -475,8 +481,8 @@ public class Form extends Fragment {
             Log.e("MobileForms", "Custom Css file was not found on assets/" + cssFilePath + ". Exception: " + e);
             return;
         }
-            String cssData = Files.readTextFile(customCss);
-            if (cssData == null) {
+            String cssData = readText(customCss);
+            if (stringIsEmpty(cssData)) {
                 Log.e("MobileForms", "Could not read CSS");
                 return;
             }
@@ -504,8 +510,8 @@ public class Form extends Fragment {
             return;
         }
 
-            String jsData = Files.readTextFile(customJs);
-            if (jsData == null) {
+            String jsData = readText(customJs);
+            if (stringIsEmpty(jsData)) {
                 Log.e("MobileForms", "Could not read JS");
                 return;
             }
@@ -572,6 +578,26 @@ public class Form extends Fragment {
         result = result.replace("\r", "\\r");
         result = result.replace("\f", "\\f");
         return result;
+    }
+
+    private String readText(InputStream inputStream) {
+        if (inputStream == null) return "";
+        BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
+        StringBuilder sb = new StringBuilder();
+        String line;
+        try {
+            while ((line = reader.readLine()) != null) {
+                sb.append(line);
+            }
+            reader.close();
+        } catch (IOException e) {
+            return "";
+        }
+        return sb.toString();
+    }
+
+    private boolean stringIsEmpty(String string) {
+        return string == null || !"".equals(string);
     }
 
 }
