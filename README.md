@@ -1,6 +1,10 @@
 MobileForms
 ===========
 
+[![Version](https://img.shields.io/cocoapods/v/MobileForms.svg?style=flat)](http://cocoapods.org/pods/MobileForms)
+[![License](https://img.shields.io/cocoapods/l/MobileForms.svg?style=flat)](http://cocoapods.org/pods/MobileForms)
+[![Platform](https://img.shields.io/cocoapods/p/MobileForms.svg?style=flat)](http://cocoapods.org/pods/MobileForms)
+
 Introduction
 ------------
 
