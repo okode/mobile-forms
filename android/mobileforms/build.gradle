@@ -14,7 +14,7 @@ repositories {
 }
 
 group = 'com.okode.mobileforms'
-version = '1.0.2'
+version = '1.0.3'
 
 apply plugin: 'com.android.library'
 apply plugin: 'com.github.dcendents.android-maven'
